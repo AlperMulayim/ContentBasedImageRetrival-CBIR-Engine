@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="dip">
+    <CLASSES>
+      <root url="jar://C:/ImageLibrariesJava/dip.jar!/" />
+      <root url="jar://C:/ImageLibrariesJava/jai_codec.jar!/" />
+      <root url="jar://C:/ImageLibrariesJava/jai_core.jar!/" />
+      <root url="jar://C:/ImageLibrariesJava/Jama-1.0.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

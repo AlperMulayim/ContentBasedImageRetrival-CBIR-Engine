@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_fxfotosearch" default="compile.module.fxfotosearch">
+  <dirname property="module.fxfotosearch.basedir" file="${ant.file.module_fxfotosearch}"/>
+  
+  <property name="module.jdk.home.fxfotosearch" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.fxfotosearch" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.fxfotosearch" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.fxfotosearch" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="fxfotosearch.output.dir" value="${module.fxfotosearch.basedir}/out/production/FXFotoSearch"/>
+  <property name="fxfotosearch.testoutput.dir" value="${module.fxfotosearch.basedir}/out/test/FXFotoSearch"/>
+  
+  <path id="fxfotosearch.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="fxfotosearch.module.production.classpath">
+    <path refid="${module.jdk.classpath.fxfotosearch}"/>
+    <path refid="library.dip.classpath"/>
+  </path>
+  
+  <path id="fxfotosearch.runtime.production.module.classpath">
+    <pathelement location="${fxfotosearch.output.dir}"/>
+    <path refid="library.dip.classpath"/>
+  </path>
+  
+  <path id="fxfotosearch.module.classpath">
+    <path refid="${module.jdk.classpath.fxfotosearch}"/>
+    <pathelement location="${fxfotosearch.output.dir}"/>
+    <path refid="library.dip.classpath"/>
+  </path>
+  
+  <path id="fxfotosearch.runtime.module.classpath">
+    <pathelement location="${fxfotosearch.testoutput.dir}"/>
+    <pathelement location="${fxfotosearch.output.dir}"/>
+    <path refid="library.dip.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.fxfotosearch">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.fxfotosearch">
+    <patternset refid="excluded.from.module.fxfotosearch"/>
+  </patternset>
+  
+  <path id="fxfotosearch.module.sourcepath">
+    <dirset dir="${module.fxfotosearch.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.fxfotosearch" depends="compile.module.fxfotosearch.production,compile.module.fxfotosearch.tests" description="Compile module FXFotoSearch"/>
+  
+  <target name="compile.module.fxfotosearch.production" depends="register.custom.compilers" description="Compile module FXFotoSearch; production classes">
+    <mkdir dir="${fxfotosearch.output.dir}"/>
+    <javac2 destdir="${fxfotosearch.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.fxfotosearch}/javac">
+      <compilerarg line="${compiler.args.fxfotosearch}"/>
+      <bootclasspath refid="fxfotosearch.module.bootclasspath"/>
+      <classpath refid="fxfotosearch.module.production.classpath"/>
+      <src refid="fxfotosearch.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.fxfotosearch"/>
+    </javac2>
+    
+    <copy todir="${fxfotosearch.output.dir}">
+      <fileset dir="${module.fxfotosearch.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.fxfotosearch.tests" depends="register.custom.compilers,compile.module.fxfotosearch.production" description="compile module FXFotoSearch; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.fxfotosearch" description="cleanup module">
+    <delete dir="${fxfotosearch.output.dir}"/>
+    <delete dir="${fxfotosearch.testoutput.dir}"/>
+  </target>
+</project>
